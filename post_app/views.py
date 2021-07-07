@@ -32,16 +32,9 @@ def add_post(request):
 def edit_post(request, post_id: int):
   posts = Post.objects.get(id=post_id)
   if request.method == 'POST':
-    form = AddPostForm(request.POST)
+    form = AddPostForm(request.POST, instance=posts)
     if form.is_valid():
-      post = form.save(commit=False)
-      post.created_by = request.user
-      post.save()
-    return HttpResponseRedirect(reverse('post_detail', args=(post_id,)))
-  
-  form = AddPostForm(initial={
-    'title': posts.title,
-    'url_post': posts.url_post,
-    # 'comments': posts.comments
-    })
+      form.save()
+    return HttpResponseRedirect(reverse('homepage'))
+  form = AddPostForm(instance=posts)
   return render(request, 'generic_form.html', {'form': form})
