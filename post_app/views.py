@@ -1,9 +1,9 @@
-from django.db.models import fields
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponseRedirect, reverse
 from post_app.models import CommonFieldsMixin, Post
 from post_app.forms import AddPostForm
-from django.views.generic import UpdateView
+from django.views.generic.edit import CreateView
+
 
 # Create your views here.
 
@@ -19,24 +19,29 @@ def add_post(request):
   if request.method == 'POST':
     form = AddPostForm(request.POST)
     if form.is_valid():
-      form.save(commit=False)
-      return HttpResponseRedirect(reverse('homepage'))
+      post = form.save(commit=False)
+      post.created_by = request.user
+      post.save()
+    return HttpResponseRedirect(reverse('homepage'))
   form = AddPostForm()
   return render(request, 'generic_form.html', {'form': form})
 
 
 
-# def edit_post(request, post_id: int):
-#   posts = Post.objects.get(id=post_id)
-#   if request.method == 'POST':
-#     form = AddPostForm(request.POST)
-#     if form.is_valid():
-#       form.save(commit=True)
-#       return HttpResponseRedirect(reverse("post_detail", args=(post_id,)))
 
-#   form = AddPostForm(initial= {
-#     'title': posts.title,
-#     'url_post': posts.url_post,
-#     # 'comments': posts.comments
-#     })
-#   return render(request, 'generic_form.html', {'form': form})
+def edit_post(request, post_id: int):
+  posts = Post.objects.get(id=post_id)
+  if request.method == 'POST':
+    form = AddPostForm(request.POST)
+    if form.is_valid():
+      post = form.save(commit=False)
+      post.created_by = request.user
+      post.save()
+    return HttpResponseRedirect(reverse('post_detail', args=(post_id,)))
+  
+  form = AddPostForm(initial={
+    'title': posts.title,
+    'url_post': posts.url_post,
+    # 'comments': posts.comments
+    })
+  return render(request, 'generic_form.html', {'form': form})

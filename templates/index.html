@@ -1,5 +1,11 @@
+<h1>All Posts</h1>
+
 {% for post in posts %}
 
-{{post.title}}
+<p>
+Post Title: {{post.title}}
+<br />
+Post URL: {{post.url_post}}
+</p>
 
 {% endfor %}
