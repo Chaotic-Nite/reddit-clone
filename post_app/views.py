@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponseRedirect, reverse
 from post_app.models import Post
@@ -16,11 +17,11 @@ def add_post(request):
     if form.is_valid():
       data = form.cleaned_data
       new_post = Post.objects.create(
-        title=data['title'],
         content=data['content'],
-        upvote=data['upvote'],
-        downvote=data['downvote'],
-        created_at=data['created-at']
+        likes=data['likes'],
+        dislikes=data['dislikes'],
+        created_by=data['created_by'],
+        created_at=data['created_at']
       )
       return HttpResponseRedirect(reverse('homepage'))
     form = AddPostForm()
