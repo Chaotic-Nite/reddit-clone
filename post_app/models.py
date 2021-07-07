@@ -31,3 +31,6 @@ class Post(CommonFieldsMixin, models.Model):
     title = models.CharField(max_length=150)
     url_post = models.URLField()
     comments = models.ManyToManyField(Comment, symmetrical=False, blank=True)
+
+    def __str__(self):
+        return self.title

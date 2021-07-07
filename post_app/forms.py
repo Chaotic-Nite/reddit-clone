@@ -13,3 +13,4 @@ from post_app.models import CommonFieldsMixin, Post
 class AddPostForm(forms.ModelForm):
   class Meta:
     model = Post
+    fields = ['title', 'url_post', 'comments']
