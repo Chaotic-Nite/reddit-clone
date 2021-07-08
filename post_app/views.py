@@ -38,7 +38,10 @@ def sort_view(request):
 
 
 def index(request):
-  posts = Post.objects.all().order_by('-created_at')
+  if Post.objects.filter(pk=0).exists():
+    posts = Post.objects.all()
+  else:
+    posts = False
   return render(request, 'index.html', {'posts': posts})
 
 
