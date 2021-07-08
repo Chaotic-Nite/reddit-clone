@@ -42,6 +42,22 @@ def index(request):
   return render(request, 'index.html', {'posts': posts})
 
 
+def upvote_view(request, post_id: int):
+  post = Post.objects.get(id=post_id)
+  post.upvote += 1
+  post.save()
+  return HttpResponseRedirect(reverse('homepage'))
+
+def downvote_view(request, post_id: int):
+  post = Post.objects.get(id=post_id)
+  post.downvote += 1
+  post.save()
+  return HttpResponseRedirect(reverse('homepage'))
+
+def sort_view(request):
+  posts = sorted(Post.objects.all(), key= lambda post: post.votes(), reverse=True)
+  return render(request, 'index.html', {'posts': posts})
+
 
 def post_detail(request, post_id: int):
   post = Post.objects.get(id=post_id)
