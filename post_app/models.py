@@ -7,7 +7,7 @@ from django.utils import timezone
 class Post(models.Model):
     title = models.CharField(max_length=150)
     url_post = models.URLField()
-    comments = models.ManyToManyField(Comment, symmetrical=False, blank=True)
+    # comments = models.ManyToManyField(Comment, symmetrical=False, blank=True)
     content = models.TextField()
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
@@ -20,8 +20,8 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    class Meta:
-        abstract = True
+    # class Meta:
+    #     abstract = True
 
 
 # class Comment(CommonFieldsMixin, models.Model):

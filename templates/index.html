@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <h1>All Posts</h1>
 
 {% for post in posts %}
@@ -7,13 +6,14 @@
 Post Title: {{post.title}}
 <br />
 Post URL: {{post.url_post}}
+<br />
+Post Content: {{post.content}}
 </p>
+Created at: {{post.created_at}}
 
 {% endfor %}
-=======
 <h1> This is the index and the view is working </h1>
 
 <p> Welcome {{ user.username }} </p>
 
 <a href='/logout'><button>Logout</button></a>
->>>>>>> main
