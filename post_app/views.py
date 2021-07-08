@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, HttpResponseRedirect, reverse
-from post_app.models import Post
-from post_app.forms import AddPostForm
+from django.shortcuts import redirect, render, HttpResponseRedirect, reverse
+from post_app.models import Images, Post
+from post_app.forms import AddPostForm, ImgForm
 
 
 # Create your views here.
@@ -62,3 +62,22 @@ def delete_post(request, post_id: int):
   post.delete()
   return HttpResponseRedirect(reverse('homepage'))
 
+
+def images_view(request):
+  if request.method == 'POST':
+    form = ImgForm(request.POST, request.FILES)
+    if form.is_valid():
+      form.save()
+      return redirect('success')
+  else:
+    form = ImgForm()
+    return render(request, 'index.html', {'form': form})
+
+def success(request):
+  return HttpResponse('Successfully Uploaded')
+
+
+def show_images(request):
+  if request.method == 'GET':
+    images = Images.objects.all()
+    return render(request, 'display_images.html', {'images': images})

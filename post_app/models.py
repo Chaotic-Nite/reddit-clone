@@ -21,6 +21,10 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
+class Images(models.Model):
+    name = models.CharField(max_length=70)
+    hotel_Main_img = models.ImageField(upload_to='images/')
     # class Meta:
     #     abstract = True
 

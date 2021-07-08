@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from post_app import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +30,10 @@ urlpatterns = [
     path('sorted/', views.sort_view),
     path('post/<int:post_id>/delete/', views.delete_post),
     path('post/<int:post_id>/edit/', views.edit_post),
+    path('image_upload', views.images_view, name='image_upload'),
+    path('success', views.success, name='success'),
+    path('images', views.show_images)
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
