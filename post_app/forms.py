@@ -7,7 +7,7 @@ from post_app.models import Post
 class AddPostForm(forms.ModelForm):
   class Meta:
     model = Post
-    fields = ['title', 'url_post']
+    fields = ['title', 'url_post',]
 
 
   title = forms.CharField(max_length=150)

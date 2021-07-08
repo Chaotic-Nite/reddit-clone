@@ -1,8 +1,7 @@
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, HttpResponseRedirect, reverse
-from post_app.models import CommonFieldsMixin, Post
+from post_app.models import Post
 from post_app.forms import AddPostForm
-from django.views.generic.edit import CreateView
 
 
 # Create your views here.
