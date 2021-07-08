@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user_app'
+    'user_app',
+    'post_app',
+    'main_app',
 ]
 
 MIDDLEWARE = [
@@ -124,4 +126,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = "user_app.RedditUser"
+AUTH_USER_MODEL = 'user_app.RedditUser'
+LOGIN_URL = "/login/"
