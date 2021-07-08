@@ -1,10 +1,9 @@
 <h1>All Posts</h1>
 
-<button><a href="/addpost">Add New Post</a></button>
+<button style="margin-right: 5px;"><a href="/addpost">Add New Post</a></button>
 <button><a href="/sorted">Sort by Vote Score</a></button>
 
 {% for post in posts %}
-
 <p>
 <h2>Post Title: <a href="/post/{{post.id}}">{{post.title}}</a></h2>
 <br />
@@ -14,10 +13,11 @@ Post Content: {{post.content}}
 <br />
 Vote Score: {{post.votes}}
 <br />
-<button><a href="/post/{{post.id}}/edit">Edit Post</a></button>
-<button><a href="/upvote/{{post.id}}/">Up Vote</a></button>
-<button><a href="/downvote/{{post.id}}/">Down Vote</a></button>
 Created at: {{post.created_at}}
+<br />
+<button style="margin-right: 5px;"><a href="/post/{{post.id}}/edit">Edit Post</a></button>
+<button style="margin-right: 5px;"><a href="/upvote/{{post.id}}/">Up Vote</a></button>
+<button style="margin-right: 5px;"><a href="/downvote/{{post.id}}/">Down Vote</a></button>
 <br />
 <button style="margin-top: 10px;"><a href="/post/{{post.id}}/delete">Delete Post</a></button>
 {% endfor %}
