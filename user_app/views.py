@@ -3,12 +3,14 @@ from user_app.forms import LoginForm, SignupForm
 from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+@login_required
 def index(request):
     form = 'index.html'
-    return render(request, 'index.html')
+    return render(request, 'index.html') # can only see the index if logged in
 
 def signup(request):
     form = SignupForm()
@@ -43,4 +45,4 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('login'))
