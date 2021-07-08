@@ -1,6 +1,7 @@
 from django.db.models import fields
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, HttpResponseRedirect, reverse
+<<<<<<< HEAD
 from post_app.models import Post
 from post_app.forms import AddPostForm, PostDeleteForm
 from django.contrib.auth.decorators import login_required
@@ -8,6 +9,10 @@ from subreddit.models import SubReddit, Moderator
 from comments.models import Comment
 from comments.forms import AddCommentForm
 from user_app.models import RedditUser
+=======
+from post_app.models import Images, Post
+from post_app.forms import AddPostForm, ImgForm
+>>>>>>> e397c4b... Your able to upload images but got to figure out how to be able to upload them to the homepage
 
 
 def index(request):
