@@ -9,13 +9,14 @@ class Post(models.Model):
     url_post = models.URLField()
     # comments = models.ManyToManyField(Comment, symmetrical=False, blank=True)
     content = models.TextField()
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
+    upvote = models.IntegerField(default=0)
+    downvote = models.IntegerField(default=0)
     created_by = models.ForeignKey(RedditUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
+    votes = models.IntegerField(default=0)
 
-    def like_dislike(self):
-        return self.like - self.dislike
+    def votes(self):
+        return self.upvote - self.downvote
 
     def __str__(self):
         return self.title

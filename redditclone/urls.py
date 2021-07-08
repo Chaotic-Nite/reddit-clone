@@ -22,5 +22,8 @@ urlpatterns = [
     path('', views.index, name='homepage'),
     path('post/<int:post_id>', views.post_detail, name="post_detail"),
     path('addpost/', views.add_post),
+    path('upvote/<int:post_id>/', views.upvote_view, name='upvote'),
+    path('downvote/<int:post_id>/', views.downvote_view, name='downvote'),
+    path('sorted/', views.sort_view),
     path('post/<int:post_id>/edit/', views.edit_post),
 ]
