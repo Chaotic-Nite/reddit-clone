@@ -18,7 +18,8 @@ Vote Score: {{post.votes}}
 <button><a href="/upvote/{{post.id}}/">Up Vote</a></button>
 <button><a href="/downvote/{{post.id}}/">Down Vote</a></button>
 Created at: {{post.created_at}}
-
+<br />
+<button style="margin-top: 10px;"><a href="/post/{{post.id}}/delete">Delete Post</a></button>
 {% endfor %}
 <h1> This is the index and the view is working </h1>
 

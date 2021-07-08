@@ -55,3 +55,10 @@ def edit_post(request, post_id: int):
     return HttpResponseRedirect(reverse('homepage'))
   form = AddPostForm(instance=posts)
   return render(request, 'generic_form.html', {'form': form})
+
+
+def delete_post(request, post_id: int):
+  post = Post.objects.get(id=post_id)
+  post.delete()
+  return HttpResponseRedirect(reverse('homepage'))
+

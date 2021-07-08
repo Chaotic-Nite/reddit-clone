@@ -25,5 +25,6 @@ urlpatterns = [
     path('upvote/<int:post_id>/', views.upvote_view, name='upvote'),
     path('downvote/<int:post_id>/', views.downvote_view, name='downvote'),
     path('sorted/', views.sort_view),
+    path('post/<int:post_id>/delete/', views.delete_post),
     path('post/<int:post_id>/edit/', views.edit_post),
 ]
