@@ -75,7 +75,7 @@ def hot(request):
 
 
 def following(request):
-    following = FollowReddit.objects.filter(user=request.user)
+    following = RedditUser.objects.filter(user=request.user)
     return render(request, 'main.html', {'posts': following})
 
 

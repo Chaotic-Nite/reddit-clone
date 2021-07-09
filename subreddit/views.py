@@ -51,7 +51,8 @@ def subredditview(request, name):
 
 @login_required
 def subscribe(request, id):
-    subreddit = SubReddit.objects.get(id=id)
+    # have it in Reddituser insted of SubReddit
+    subreddit = RedditUser.objects.get(id=id)
     subreddit.subscriber.add(
         request.user
     )
@@ -60,13 +61,14 @@ def subscribe(request, id):
 
 @login_required
 def unsubscribe(request, id):
-    subreddit = SubReddit.objects.get(id=id)
+     # have it in Reddituser insted of SubReddit
+    subreddit = RedditUser.objects.get(id=id)
     subreddit.subscriber.remove(
         request.user
     )
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
+# have to work on this
 def subredditnew(request, name):
     subreddit = SubReddit.objects.get(name=name)
     posts = Post.objects.filter(subreddit=subreddit.id).order_by("-date_created")

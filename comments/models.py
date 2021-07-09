@@ -4,7 +4,7 @@ from django.utils import timezone
 from posts.models import Post
 from authentication.models import RedditUser
 
-
+# use the mixin, score not needed. 
 class Comment(MPTTModel):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     body = models.TextField(max_length=4000)

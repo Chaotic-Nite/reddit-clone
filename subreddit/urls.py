@@ -1,7 +1,7 @@
 from django.urls import path
 from subreddit.views import add_subreddit, subredditview, subreddithot, subredditnew, subscribe, unsubscribe
 
-
+# will be adding search
 urlpatterns = [
     path('addsubreddit/', add_subreddit, name='addsubreddit'),
     path('r/<str:name>/', subredditview, name='subreddit'),

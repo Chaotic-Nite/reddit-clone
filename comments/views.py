@@ -21,7 +21,7 @@ def down_vote(request, name, id, id2):
     down_post.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
+# have an if satement checking if it is a moderator or not.
 def delete_view(request, id):
     comment = Comment.objects.get(id=id)
     comment.delete()

@@ -13,6 +13,7 @@ class Moderator(models.Model):
 class SubReddit(models.Model):
     name = models.CharField(max_length=30, unique=True)
     description = models.TextField(max_length=200)
+    #subscriber not needed
     subscriber = models.ManyToManyField(RedditUser, related_name='user')
     moderator = models.ManyToManyField(Moderator, related_name='moderator')
 
