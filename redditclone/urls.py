@@ -15,12 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from user_app import views
+from post_app import views
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
-    path('signup/', views.signup, name='signup'),
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    path('', views.index, name='homepage'),
+    path('post/<int:post_id>', views.post_detail, name='post_detail'),
+    path('addpost/', views.add_post),
+    path('upvote/<int:post_id>/', views.upvote_view, name='upvote'),
+    path('downvote/<int:post_id>/', views.downvote_view, name='downvote'),
+    path('sorted/', views.sort_view),
+    path('post/<int:post_id>/delete/', views.delete_post),
+    path('post/<int:post_id>/edit/', views.edit_post),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
