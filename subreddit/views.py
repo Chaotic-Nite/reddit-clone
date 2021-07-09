@@ -1,8 +1,8 @@
 from django.shortcuts import render, reverse, HttpResponseRedirect
 from subreddit.models import SubReddit,Moderator
 from subreddit.forms import AddSubRedditForm
-from authentication.models import RedditUser
-from posts.models import Post
+from user_app.models import RedditUser
+from post_app.models import Post
 from subreddit.models import Moderator
 from django.contrib.auth.decorators import login_required
 
@@ -15,7 +15,7 @@ def add_subreddit(request):
         form = AddSubRedditForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            SubReddit.objects.create(
+            subreddit = SubReddit.objects.create(
                 name=data['name'],
                 description=data['description'],
             )
@@ -25,8 +25,7 @@ def add_subreddit(request):
             )
             subscriber = RedditUser.objects.get(id=request.user.id)
             moderator = Moderator.objects.get(user=request.user)
-            subreddit = SubReddit.objects.get(name=data['name'])
-            subreddit.subscriber.add(subscriber)
+            subscriber.sub_reddits.add(subreddit)
             subreddit.moderator.add(moderator)
             subreddit.save()
         return HttpResponseRedirect(reverse('homepage'))
@@ -52,44 +51,43 @@ def subredditview(request, name):
 @login_required
 def subscribe(request, id):
     # have it in Reddituser insted of SubReddit
-    subreddit = RedditUser.objects.get(id=id)
-    subreddit.subscriber.add(
-        request.user
-    )
+    subreddit = SubReddit.objects.get(id=id)
+    subscriber = RedditUser.objects.get(id=request.user.id)
+    subscriber.sub_reddits.add(subreddit)
+
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
 def unsubscribe(request, id):
      # have it in Reddituser insted of SubReddit
-    subreddit = RedditUser.objects.get(id=id)
-    subreddit.subscriber.remove(
-        request.user
-    )
+    subreddit = SubReddit.objects.get(id=id)
+    subscriber = RedditUser.objects.get(id=request.user.id)
+    subscriber.sub_reddits.remove(subreddit)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-# have to work on this
-def subredditnew(request, name):
-    subreddit = SubReddit.objects.get(name=name)
-    posts = Post.objects.filter(subreddit=subreddit.id).order_by("-date_created")
-    if request.user.is_authenticated:
-        moderators = Moderator.objects.filter(user=request.user)
-        moderators = [moderator.user for moderator in moderators]
-    else:
-        moderators = None
-    new_path = f'/r/{subreddit.name}/new/'
-    subscribe_list = SubReddit.objects.filter(subscriber=request.user.id)
-    return render(request, 'subreddit.html', {'posts': posts, 'subreddit': subreddit, "new_path": new_path,"moderators": moderators, "subscribe_list": subscribe_list})
+# # have to work on this
+# def subredditnew(request, name):
+#     subreddit = SubReddit.objects.get(name=name)
+#     posts = Post.objects.filter(subreddit=subreddit.id).order_by("-date_created")
+#     if request.user.is_authenticated:
+#         moderators = Moderator.objects.filter(user=request.user)
+#         moderators = [moderator.user for moderator in moderators]
+#     else:
+#         moderators = None
+#     new_path = f'/r/{subreddit.name}/new/'
+#     subscribe_list = SubReddit.objects.filter(subscriber=request.user.id)
+#     return render(request, 'subreddit.html', {'posts': posts, 'subreddit': subreddit, "new_path": new_path,"moderators": moderators, "subscribe_list": subscribe_list})
 
 
-def subreddithot(request, name):
-    subreddit = SubReddit.objects.get(name=name)
-    posts = Post.objects.filter(subreddit=subreddit.id).order_by("-score")
-    if request.user.is_authenticated:
-        moderators = Moderator.objects.filter(user=request.user)
-        moderators = [moderator.user for moderator in moderators]
-    else:
-        moderators = None
-    hot_path = f'/r/{subreddit.name}/hot/'
-    subscribe_list = SubReddit.objects.filter(subscriber=request.user.id)
-    return render(request, 'subreddit.html', {'posts': posts, 'subreddit': subreddit, "hot_path": hot_path,"moderators": moderators, "subscribe_list": subscribe_list})
+# def subreddithot(request, name):
+#     subreddit = SubReddit.objects.get(name=name)
+#     posts = Post.objects.filter(subreddit=subreddit.id).order_by("-score")
+#     if request.user.is_authenticated:
+#         moderators = Moderator.objects.filter(user=request.user)
+#         moderators = [moderator.user for moderator in moderators]
+#     else:
+#         moderators = None
+#     hot_path = f'/r/{subreddit.name}/hot/'
+#     subscribe_list = SubReddit.objects.filter(subscriber=request.user.id)
+#     return render(request, 'subreddit.html', {'posts': posts, 'subreddit': subreddit, "hot_path": hot_path,"moderators": moderators, "subscribe_list": subscribe_list})
