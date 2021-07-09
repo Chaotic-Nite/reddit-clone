@@ -2,6 +2,8 @@ from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, HttpResponseRedirect, reverse
 from post_app.models import Post
 from post_app.forms import AddPostForm
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
@@ -13,13 +15,15 @@ def index(request):
     posts = False
   return render(request, 'index.html', {'posts': posts})
 
-
+@login_required
 def upvote_view(request, post_id: int):
   post = Post.objects.get(id=post_id)
   post.upvote += 1
   post.save()
   return HttpResponseRedirect(reverse('homepage'))
 
+
+@login_required
 def downvote_view(request, post_id: int):
   post = Post.objects.get(id=post_id)
   post.downvote += 1
@@ -35,6 +39,8 @@ def post_detail(request, post_id: int):
   post = Post.objects.get(id=post_id)
   return render(request, 'post_detail.html', {'post': post})
 
+
+@login_required
 def add_post(request):
   if request.method == 'POST':
     form = AddPostForm(request.POST)
@@ -48,7 +54,7 @@ def add_post(request):
 
 
 
-
+@login_required
 def edit_post(request, post_id: int):
   posts = Post.objects.get(id=post_id)
   if request.method == 'POST':
@@ -60,6 +66,7 @@ def edit_post(request, post_id: int):
   return render(request, 'generic_form.html', {'form': form})
 
 
+@login_required
 def delete_post(request, post_id: int):
   post = Post.objects.get(id=post_id)
   post.delete()
