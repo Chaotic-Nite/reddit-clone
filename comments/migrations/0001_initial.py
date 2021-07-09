@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
 import django.utils.timezone
+import mptt.fields
 
 
 class Migration(migrations.Migration):
@@ -11,25 +12,26 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('post_app', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('subreddit', '__first__'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Post',
+            name='Comment',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('upvotes', models.IntegerField(default=0)),
                 ('downvotes', models.IntegerField(default=0)),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
-                ('type_post', models.CharField(choices=[('Text', 'Text'), ('Link', 'Link'), ('Image', 'Image')], default='Text', max_length=7)),
-                ('title', models.CharField(max_length=150)),
-                ('image', models.ImageField(blank=True, null=True, upload_to='images/')),
-                ('content', models.TextField(blank=True, null=True)),
-                ('url_post', models.URLField(blank=True, null=True)),
+                ('body', models.TextField(max_length=4000)),
+                ('lft', models.PositiveIntegerField(editable=False)),
+                ('rght', models.PositiveIntegerField(editable=False)),
+                ('tree_id', models.PositiveIntegerField(db_index=True, editable=False)),
+                ('mptt_level', models.PositiveIntegerField(editable=False)),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('subreddit', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='subreddit.subreddit')),
+                ('parent', mptt.fields.TreeForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='comments.comment')),
+                ('post', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='post_app.post')),
             ],
             options={
                 'abstract': False,

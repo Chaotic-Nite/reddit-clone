@@ -1,39 +1,43 @@
-"""redditclone URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from post_app import views
-from user_app import views as views2
+from post_app import views as post_view
+from user_app import views as user_view
+from comments import views as comment_view
+from subreddit import views as subreddit_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('post/<int:post_id>', views.post_detail, name='post_detail'),
-    path('addpost/', views.add_post),
-    path('upvote/<int:post_id>/', views.upvote_view, name='upvote'),
-    path('downvote/<int:post_id>/', views.downvote_view, name='downvote'),
-    path('sorted/', views.sort_view),
-    path('post/<int:post_id>/delete/', views.delete_post),
-    path('post/<int:post_id>/edit/', views.edit_post),
-    path('signup/', views2.signup_view, name='signup'),
-    path('login/', views2.login_view, name='login'),
-    path('logout/', views2.logout_view, name='logout'),
-    path('', views.index, name='homepage'),
+    # Comments
+    path('r/<str:name>/post/<int:id>/upvote/<int:id2>/', comment_view.up_vote, name='comment_upvote'),
+    path('r/<str:name>/post/<int:id>/downvote/<int:id2>/', comment_view.down_vote, name='comment_downvote'),
+    path('delete_comment/<int:id>/', comment_view.delete_view, name='delete_comment'),
+    # Posts
+    path('post/<int:post_id>', post_view.post_detail, name='post_detail'),
+    path('addpost/', post_view.add_post),
+    path('upvote/<int:post_id>/', post_view.upvote_view, name='upvote'),
+    path('downvote/<int:post_id>/', post_view.downvote_view, name='downvote'),
+    path('post/delete/<int:id>/', post_view.delete_view, name='post_delete'),
+    path('sorted/', post_view.sort_view),
+    path('post/<int:post_id>/edit/', post_view.edit_post),
+    # Users
+    path('signup/', user_view.signup_view, name='signup'),
+    path('login/', user_view.login_view, name='login'),
+    path('logout/', user_view.logout_view, name='logout'),
+    path('new/', user_view.new, name='new'),
+    path('hot/', user_view.hot, name='hot'),
+    path('following/', user_view.following, name="following"),
+    path('', user_view.index, name='homepage'),
+    # Subreddits
+    path('addsubreddit/', subreddit_view.add_subreddit, name='addsubreddit'),
+    path('r/<str:name>/', subreddit_view.subredditview, name='subreddit'),
+    # path('r/<str:name>/new/', subreddit_view.subredditnew, name='subredditnew'),
+    # path('r/<str:name>/hot/', subreddit_view.subreddithot, name='subreddithot'),
+    path('subscribed/<int:id>/', subreddit_view.subscribe, name='subscribe'),
+    path('unsubscribed/<int:id>/', subreddit_view.unsubscribe, name='unsubscribe'),
+
 ]
 
 if settings.DEBUG:
