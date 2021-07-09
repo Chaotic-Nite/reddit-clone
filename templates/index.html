@@ -1,5 +1,9 @@
 <h1>All Posts</h1>
 
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.as_p}}
+  <button type="submit">Upload</button>
 {% for image in images %}
 
 {{ image.name }}
@@ -8,10 +12,8 @@
 </div>
 {% endfor %}
 
-<form method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{form.as_p}}
-  <button type="submit">Upload</button>
+
+
   
 
 <button style="margin-right: 5px;"><a href="/addpost">Add New Post</a></button>
