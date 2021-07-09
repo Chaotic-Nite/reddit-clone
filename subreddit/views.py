@@ -9,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def add_subreddit(request):
-    html = "addsubreddit.html"
+    html = "subreddit/addsubreddit.html"
+
 
     if request.method == "POST":
         form = AddSubRedditForm(request.POST)
