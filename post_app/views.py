@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from subreddit.models import SubReddit, Moderator
 from comments.models import Comment
 from comments.forms import AddCommentForm
+from user_app.models import RedditUser
 
 
 def index(request):
