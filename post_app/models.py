@@ -1,12 +1,13 @@
 from django.db import models
 from user_app.models import RedditUser
+from subreddit.models import SubReddit
 from django.utils import timezone
 
 
 class CommonFieldsMixin(models.Model):
-    likes = models.IntegerField(default=0)
-    dislikes = models.IntegerField(default=0)
-    created_by = models.ForeignKey(RedditUser, on_delete=models.CASCADE)
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+    author = models.ForeignKey(RedditUser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now)
 
     def like_dislike(self):
@@ -26,4 +27,7 @@ class Post(CommonFieldsMixin, models.Model):
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     url_post = models.URLField(blank=True, null=True)
-    #comments = models.ManyToManyField(Comment, symmetrical=False, blank=True)
+    subreddit = models.ForeignKey(SubReddit, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title

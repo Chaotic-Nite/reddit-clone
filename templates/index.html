@@ -3,7 +3,7 @@
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   {{form.as_p}}
-  <button type="submit">Upload</button>
+
 {% for image in images %}
 
 {{ image.name }}
@@ -11,8 +11,6 @@
 <img src="{{ image.hotel_Main_img.url}}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
 </div>
 {% endfor %}
-
-
 
   
 
@@ -39,6 +37,18 @@
 {% endif %}
     <h1> This is the index and the view is working </h1>
 
-<p> Welcome {{ user.username }} </p>
-
-<a href='/logout'><button>Logout</button></a>
+    <div class="navbar-end">
+        <div class='navbar-item'>
+            <div class='field is-grouped'>
+                {% if user.is_authenticated %}
+                <a href="/user/{{ user.username }}" class='navbar-item add-right' id='usr-color'>{{ request.user.username }}</a>
+                <button class='button is-danger'><a href='/logout/'>Logout</a></button>
+                <a href='/user/{{ user.username }}' class='navbar-item' id='profile'>Profile</a>
+                {% else %}
+                <button class='button is-danger'><a href='/signup/' class="add-right">Sign Up</a></button>
+                <button class='button is-black'><a href='/login/'>Login</a></button>
+                <a class='navbar-item' id='profile' disabled>Profile</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,30 @@
+<h1 class='title'>Twitter-Clone</h1> 
+<nav class='navbar is-dark has-shadow'>
+    <div class='navbar-menu'>
+        <div class='navbar-start'>
+            <a href='/' class='navbar-item'>Home</a>
+            <a href='/explore' class='navbar-item'>Explore</a>
+            <form method=POST action="{% url 'search-subs' %}">
+                {% csrf_token %}
+                <input type='search' placeholder="Search" aria-label="Search" name='searched-sub'>
+                <button type='submit'>Search</button>
+            </form>
+        </div>
+        
+        <div class="navbar-end">
+            <div class='navbar-item'>
+                <div class='field is-grouped'>
+                    {% if user.is_authenticated %}
+                    <a href="/user/{{ user.username }}" class='navbar-item add-right' id='usr-color'>{{ request.user.username }}</a>
+                    <a href='/logout/'><button class='button is-danger'>Logout</button></a>
+                    <a href='/user/{{ user.username }}' class='navbar-item' id='profile'>Profile</a>
+                    {% else %}
+                    <a href='/signup/' class="add-right"><button class='button is-danger'>Sign Up</button></a>
+                    <a href='/login/'><button class='button is-black'>Login</button></a>
+                    <a class='navbar-item' id='profile' disabled>Profile</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
