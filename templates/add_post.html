@@ -1,0 +1,65 @@
+{% load static %}
+{% static 'static_jquery/js/jquery.js' %}
+<html>
+
+<body>
+
+    <form class='form' method="post" action="">
+      {% csrf_token %}
+      <div class='field'>
+        <label class="label" for="{{ field.auto_id }}">{{ form.title.label }}:</label>
+        {{ form.title }} 
+      </div>
+      
+      <div class='field'>
+        <label class="label" for="{{ field.auto_id }}">{{ form.type_post.label }}:</label>
+        {{ form.type_post }} 
+      </div>
+      
+      <div class='field' id='Text'>
+        <label class="label" for="{{ field.auto_id }}">{{ form.content.label }}:</label>
+        {{ form.content }} 
+      </div>   
+      <div class='field' id='Link'>
+        <label class="label" for="{{ field.auto_id }}">{{ form.url_post.label }}:</label>
+        {{ form.url_post }} 
+      </div>   
+      <div class='field' id='Image'>
+        <label class="label" for="{{ field.auto_id }}">{{ form.content.label }}:</label>
+        {{ form.image }} 
+      </div>
+      
+      <input type="submit" value="Submit" class='button submit-bttn'/>
+    </form>
+
+    <script type='text/javascript' src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script> 
+      // wait for the DOM to be loaded 
+      $(document).ready(function() { 
+        $('#Text').show();
+        $('#Link').hide();
+        $('#Image').hide();
+      }); 
+    </script> 
+    <script type='text/javascript'>
+      $('#id_type_post').on('change', function (e) {
+        var optionSelected = $("option:selected", this);
+        var valueSelected = this.value;
+        console.log(optionSelected)
+        if (valueSelected === 'Text'){
+            $('#Text').show();
+            $('#Link').hide();
+            $('#Image').hide();
+        } else if (valueSelected === 'Link') {
+            $('#Text').hide();
+            $('#Link').show();
+            $('#Image').hide();
+        } else if (valueSelected === 'Image') {
+            $('#Text').hide();
+            $('#Link').hide();
+            $('#Image').show();
+        }
+    });
+    </script>
+  </body>
+</html>

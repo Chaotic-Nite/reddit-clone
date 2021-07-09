@@ -1,6 +1,20 @@
 <h1>All Posts</h1>
 
-<button><a href="/addpost">Add New Post</a></button>
+{% for image in images %}
+
+{{ image.name }}
+
+<img src="{{ image.hotel_Main_img.url}}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+</div>
+{% endfor %}
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{form.as_p}}
+  <button type="submit">Upload</button>
+  
+
+<button style="margin-right: 5px;"><a href="/addpost">Add New Post</a></button>
 <button><a href="/sorted">Sort by Vote Score</a></button>
 
 {% if posts %}
