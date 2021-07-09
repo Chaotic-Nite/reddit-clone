@@ -1,3 +1,4 @@
+import subreddit
 from django.shortcuts import render
 from user_app.forms import LoginForm, SignupForm
 from django.shortcuts import render, HttpResponseRedirect, redirect
@@ -5,8 +6,65 @@ from django.contrib.auth import login, authenticate, logout
 from django.urls import reverse
 from user_app.models import RedditUser
 from django.contrib.auth.decorators import login_required
+from subreddit.models import SubReddit
+from post_app.models import Post
 
-# Create your views here.
+# Need to see about making these views cleaner
+def index(request):
+    if Post.objects.filter(pk=0).exists():
+        posts = Post.objects.all()
+    else:
+        posts = []
+    if SubReddit.objects.filter(pk=0).exists():    
+        subreddits = SubReddit.objects.all()
+        sub_r_count = SubReddit.objects.all().count()
+        subscriber = RedditUser.objects.get(id=request.user.id)
+        subscribe_list = subscriber.sub_reddit.all()
+    else:
+        subreddits = []
+        sub_r_count = 0
+        subscribe_list = []
+    return render(request, 'main.html', {'posts': posts, 'subreddits': subreddits, "sub_r_count": sub_r_count, "subscribe_list": subscribe_list})
+
+
+def new(request):
+    if Post.objects.filter(pk=0).exists():
+        posts = Post.objects.all().order_by("-date_created")
+    else:
+        posts = []
+    if SubReddit.objects.filter(pk=0).exists():    
+        subreddits = SubReddit.objects.all()
+        sub_r_count = SubReddit.objects.all().count()
+        subscriber = RedditUser.objects.get(id=request.user.id)
+        subscribe_list = subscriber.sub_reddit.all()
+    else:
+        subreddits = []
+        sub_r_count = 0
+        subscribe_list = []
+    return render(request, 'main.html', {'posts': posts, 'subreddits': subreddits, "sub_r_count": sub_r_count, "subscribe_list": subscribe_list})
+
+
+def hot(request):
+    if Post.objects.filter(pk=0).exists():
+        posts = sorted(Post.objects.all(), key=lambda post: post.like_dislike(), reverse=True)
+    else:
+        posts = []
+    if SubReddit.objects.filter(pk=0).exists():    
+        subreddits = SubReddit.objects.all()
+        sub_r_count = SubReddit.objects.all().count()
+        subscriber = RedditUser.objects.get(id=request.user.id)
+        subscribe_list = subscriber.sub_reddit.all()
+    else:
+        subreddits = []
+        sub_r_count = 0
+        subscribe_list = []
+    return render(request, 'main.html', {'posts': posts, 'subreddits': subreddits, "sub_r_count": sub_r_count, "subscribe_list": subscribe_list})
+
+
+def following(request):
+    following = RedditUser.objects.filter(user=request.user)
+    return render(request, 'main.html', {'posts': following})
+
 
 def signup_view(request):
     ''' View to Signup to the Application's TwitterUser Model '''
