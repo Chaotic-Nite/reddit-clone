@@ -67,27 +67,27 @@ def unsubscribe(request, id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 # # have to work on this
-# def subredditnew(request, name):
-#     subreddit = SubReddit.objects.get(name=name)
-#     posts = Post.objects.filter(subreddit=subreddit.id).order_by("-date_created")
-#     if request.user.is_authenticated:
-#         moderators = Moderator.objects.filter(user=request.user)
-#         moderators = [moderator.user for moderator in moderators]
-#     else:
-#         moderators = None
-#     new_path = f'/r/{subreddit.name}/new/'
-#     subscribe_list = SubReddit.objects.filter(subscriber=request.user.id)
-#     return render(request, 'subreddit.html', {'posts': posts, 'subreddit': subreddit, "new_path": new_path,"moderators": moderators, "subscribe_list": subscribe_list})
+def subredditnew(request, name):
+    subreddit = SubReddit.objects.get(name=name)
+    posts = Post.objects.filter(subreddit=subreddit.id).order_by("-date_created")
+    if request.user.is_authenticated:
+        moderators = Moderator.objects.filter(user=request.user)
+        moderators = [moderator.user for moderator in moderators]
+    else:
+        moderators = None
+    new_path = f'/r/{subreddit.name}/new/'
+    subscribe_list = SubReddit.objects.filter(subscriber=request.user.id)
+    return render(request, 'subreddit.html', {'posts': posts, 'subreddit': subreddit, "new_path": new_path,"moderators": moderators, "subscribe_list": subscribe_list})
 
 
-# def subreddithot(request, name):
-#     subreddit = SubReddit.objects.get(name=name)
-#     posts = Post.objects.filter(subreddit=subreddit.id).order_by("-score")
-#     if request.user.is_authenticated:
-#         moderators = Moderator.objects.filter(user=request.user)
-#         moderators = [moderator.user for moderator in moderators]
-#     else:
-#         moderators = None
-#     hot_path = f'/r/{subreddit.name}/hot/'
-#     subscribe_list = SubReddit.objects.filter(subscriber=request.user.id)
-#     return render(request, 'subreddit.html', {'posts': posts, 'subreddit': subreddit, "hot_path": hot_path,"moderators": moderators, "subscribe_list": subscribe_list})
+def subreddithot(request, name):
+    subreddit = SubReddit.objects.get(name=name)
+    posts = Post.objects.filter(subreddit=subreddit.id).order_by("-score")
+    if request.user.is_authenticated:
+        moderators = Moderator.objects.filter(user=request.user)
+        moderators = [moderator.user for moderator in moderators]
+    else:
+        moderators = None
+    hot_path = f'/r/{subreddit.name}/hot/'
+    subscribe_list = SubReddit.objects.filter(subscriber=request.user.id)
+    return render(request, 'subreddit.html', {'posts': posts, 'subreddit': subreddit, "hot_path": hot_path,"moderators": moderators, "subscribe_list": subscribe_list})
