@@ -1,6 +1,5 @@
 from django.db.models import fields
 from django.http.response import HttpResponse, HttpResponseRedirect
-<<<<<<< HEAD
 from django.shortcuts import redirect, render, HttpResponseRedirect, reverse
 from post_app.models import Post
 from post_app.forms import AddPostForm, PostDeleteForm
@@ -36,12 +35,6 @@ def downvote_view(request, post_id: int):
 def sort_view(request):
   posts = sorted(Post.objects.all(), key= lambda post: post.votes(), reverse=True)
   return render(request, 'index.html', {'posts': posts})
-=======
-from django.shortcuts import render, HttpResponseRedirect, reverse
-from post_app.models import CommonFieldsMixin, Post
-from post_app.forms import AddPostForm
-from django.views.generic import UpdateView
->>>>>>> 7a283c0... Having trouble creating an editing posts
 
 
 def index(request):
@@ -58,7 +51,6 @@ def add_post(request, name):
   if request.method == 'POST':
     form = AddPostForm(request.POST)
     if form.is_valid():
-<<<<<<< HEAD
       data = form.cleaned_data
       post = form.save(commit=False)
       post.author = request.user
@@ -128,26 +120,3 @@ def delete_view(request, id):
     post.image = data['image']
     post.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-=======
-      form.save(commit=False)
-      return HttpResponseRedirect(reverse('homepage'))
-  form = AddPostForm()
-  return render(request, 'generic_form.html', {'form': form})
-
-
-
-# def edit_post(request, post_id: int):
-#   posts = Post.objects.get(id=post_id)
-#   if request.method == 'POST':
-#     form = AddPostForm(request.POST)
-#     if form.is_valid():
-#       form.save(commit=True)
-#       return HttpResponseRedirect(reverse("post_detail", args=(post_id,)))
-
-#   form = AddPostForm(initial= {
-#     'title': posts.title,
-#     'url_post': posts.url_post,
-#     # 'comments': posts.comments
-#     })
-#   return render(request, 'generic_form.html', {'form': form})
->>>>>>> 7a283c0... Having trouble creating an editing posts
