@@ -19,7 +19,7 @@ urlpatterns = [
     path('addpost/', post_view.add_post),
     path('upvote/<int:post_id>/', post_view.upvote_view, name='upvote'),
     path('downvote/<int:post_id>/', post_view.downvote_view, name='downvote'),
-    path('post/delete/<int:id>/', post_view.delete_view, name='post_delete'),
+    path('post/<int:id>/delete/', post_view.delete_view, name='post_delete'),
     path('sorted/', post_view.sort_view),
     path('post/<int:post_id>/edit/', post_view.edit_post),
     # Users

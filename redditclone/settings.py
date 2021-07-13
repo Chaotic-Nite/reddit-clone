@@ -40,18 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     'django_static_jquery',
     'mptt',
     'post_app',
     'user_app',
     'subreddit',
     'comments'
-=======
-    'post_app',
-    'user_app',
-    'main_app'
->>>>>>> 7a283c0... Having trouble creating an editing posts
 ]
 
 MIDDLEWARE = [
@@ -69,11 +63,7 @@ ROOT_URLCONF = 'redditclone.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-<<<<<<< HEAD
         'DIRS': [BASE_DIR /'templates'],
-=======
-        'DIRS': [BASE_DIR/ 'templates'],
->>>>>>> 7a283c0... Having trouble creating an editing posts
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -28,7 +28,7 @@ class Post(CommonFieldsMixin, models.Model):
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     url_post = models.URLField(blank=True, null=True)
-    subreddit = models.ForeignKey(SubReddit, on_delete=models.CASCADE)
+    subreddit = models.ForeignKey(SubReddit, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title
