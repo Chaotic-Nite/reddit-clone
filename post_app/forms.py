@@ -35,4 +35,8 @@ class PostDeleteForm(forms.ModelForm):
   
   class Meta:
     model = Post
+<<<<<<< HEAD
     fields = ['type_post', 'url_post', 'content', 'image']
+=======
+    fields = ['title', 'url_post', 'comments']
+>>>>>>> 7a283c0... Having trouble creating an editing posts

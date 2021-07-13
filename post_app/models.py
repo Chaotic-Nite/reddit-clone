@@ -24,6 +24,7 @@ class Post(CommonFieldsMixin, models.Model):
 
     type_post = models.CharField(max_length=7, choices=TYPE_POST, default='Text')
     title = models.CharField(max_length=150)
+<<<<<<< HEAD
     image = models.ImageField(upload_to='images/', blank=True, null=True)
     content = models.TextField(blank=True, null=True)
     url_post = models.URLField(blank=True, null=True)
@@ -32,3 +33,10 @@ class Post(CommonFieldsMixin, models.Model):
     def __str__(self):
         return self.title
 
+=======
+    url_post = models.URLField()
+    comments = models.ManyToManyField(Comment, symmetrical=False, blank=True)
+
+    def __str__(self):
+        return self.title
+>>>>>>> 7a283c0... Having trouble creating an editing posts
