@@ -5,16 +5,16 @@ from django.contrib.auth.decorators import login_required
 
 
 @login_required
-def up_vote(request, name, id):
-    up_post = Comment.objects.get(id=id)
+def up_vote(request, comment_id):
+    up_post = Comment.objects.get(id=comment_id)
     up_post.upvotes += 1
     up_post.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
-def down_vote(request, name, id):
-    down_post = Comment.objects.get(id=id)
+def down_vote(request,comment_id):
+    down_post = Comment.objects.get(id=comment_id)
     down_post.downvotes += 1
     down_post.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
