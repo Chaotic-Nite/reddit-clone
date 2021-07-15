@@ -5,12 +5,11 @@
     <h3>
       <ul>
         <li>
-          <a href="/r/{{post.subreddit}}/post/{{post.id}}">{{ post.title }}</a>
+          <a href="/post/{{post.id}}">{{ post.title }}</a>
         </li>
       </ul>
     </h3>
     <ul>
-
 
 
       <span>
@@ -31,7 +30,7 @@
         <button><a href="/login?next={{ request.path }}" style="text-decoration:none; color:red">⇩</a></button>
         {%endif%}
       </span>
-      Submitted on {{post.date_created}} by {{post.author}} from <a
+      Submitted on {{post.created_at}} by {{post.author}} from <a
         href="/r/{{post.subreddit}}">r/{{ post.subreddit }}</a>
     </ul>
   </div>
