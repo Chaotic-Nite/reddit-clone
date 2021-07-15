@@ -3,7 +3,14 @@
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   {{form.as_p}}
-  <button type="submit">Upload</button>
+{% for image in images %}
+
+{{ image.name }}
+
+<img src="{{ image.hotel_Main_img.url}}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+</div>
+{% endfor %}
+
   
 
 <button style="margin-right: 5px;"><a href="/addpost">Add New Post</a></button>
@@ -29,6 +36,7 @@
 {% endif %}
     <h1> This is the index and the view is working </h1>
 
+<<<<<<< HEAD
     <div class="navbar-end">
         <div class='navbar-item'>
             <div class='field is-grouped'>
@@ -44,3 +52,6 @@
             </div>
         </div>
     </div>
+=======
+<a href='/logout'><button>Logout</button></a>
+>>>>>>> 88609ef... Changed the post model

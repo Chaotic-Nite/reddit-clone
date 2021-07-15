@@ -1,3 +1,4 @@
+from django.db.models import fields
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, HttpResponseRedirect, reverse
 from post_app.models import Post
@@ -6,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from subreddit.models import SubReddit, Moderator
 from comments.models import Comment
 from comments.forms import AddCommentForm
+from user_app.models import RedditUser
 
 
 def index(request):
@@ -41,15 +43,15 @@ def post_detail(request, post_id: int):
 
 
 @login_required
-def add_post(request, name):
+def add_post(request):
   if request.method == 'POST':
     form = AddPostForm(request.POST)
     if form.is_valid():
       data = form.cleaned_data
       post = form.save(commit=False)
       post.author = request.user
-      if not data['subreddit']:
-        post.subreddit = SubReddit.objects.get(name=name)
+      # if not data['subreddit']:
+      #   post.subreddit = SubReddit.objects.get(name=name)
       post.save()
     return HttpResponseRedirect(reverse('homepage'))
   form = AddPostForm()
@@ -104,13 +106,19 @@ def postview(request, id, name):
     'form': form, "moderators":moderators, "commentator": commentator})
 
 
+# def delete_view(request, id):
+    # post = Post.objects.get(id=id)
+    # form = PostDeleteForm()
+    # data = form.cleaned_data
+    # post.type_post = data['type_post']
+    # post.content = data['data']
+    # post.url_post = data['url_post']
+    # post.image = data['image']
+    # post.save()
+    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 def delete_view(request, id):
     post = Post.objects.get(id=id)
-    form = PostDeleteForm()
-    data = form.cleaned_data
-    post.type_post = data['type_post']
-    post.content = data['data']
-    post.url_post = data['url_post']
-    post.image = data['image']
-    post.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    post.delete()
+    return HttpResponseRedirect(reverse('homepage'))
+
