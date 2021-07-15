@@ -45,8 +45,8 @@ def subredditview(request, name):
     else:
         moderators = None
     current_path = f'/r/{subreddit.name}/'
-    subscribe_list = SubReddit.objects.filter(subscriber=request.user.id)
-    return render(request, 'subreddit.html', {"subreddit": subreddit, "posts": posts, "current_path": current_path,"moderators": moderators, "subscribe_list": subscribe_list})
+    subscribe_list = SubReddit.objects.filter(reddituser=request.user.id)
+    return render(request, 'subreddit/subreddit.html', {"subreddit": subreddit, "posts": posts, "current_path": current_path,"moderators": moderators, "subscribe_list": subscribe_list})
 
 
 @login_required
