@@ -11,7 +11,6 @@
 </div>
 {% endfor %}
 
-  
 
 <button style="margin-right: 5px;"><a href="/addpost">Add New Post</a></button>
 <button><a href="/sorted">Sort by Vote Score</a></button>
@@ -19,6 +18,7 @@
 {% if posts %}
     {% for post in posts %}
         <h2>Post Title: <a href="/post/{{post.id}}">{{post.title}}</a></h2>
+        {{post.title}}
         <br />
         Post URL: {{post.url_post}}
         <br />
@@ -36,7 +36,6 @@
 {% endif %}
     <h1> This is the index and the view is working </h1>
 
-<<<<<<< HEAD
     <div class="navbar-end">
         <div class='navbar-item'>
             <div class='field is-grouped'>
@@ -52,6 +51,3 @@
             </div>
         </div>
     </div>
-=======
-<a href='/logout'><button>Logout</button></a>
->>>>>>> 88609ef... Changed the post model

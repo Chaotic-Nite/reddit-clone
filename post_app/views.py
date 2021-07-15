@@ -10,17 +10,10 @@ from comments.forms import AddCommentForm
 from user_app.models import RedditUser
 
 
-def index(request):
-  if Post.objects.filter(pk=0).exists():
-    posts = Post.objects.all()
-  else:
-    posts = False
-  return render(request, 'index.html', {'posts': posts})
-
 @login_required
 def upvote_view(request, post_id: int):
   post = Post.objects.get(id=post_id)
-  post.upvote += 1
+  post.upvotes += 1
   post.save()
   return HttpResponseRedirect(reverse('homepage'))
 
@@ -28,7 +21,7 @@ def upvote_view(request, post_id: int):
 @login_required
 def downvote_view(request, post_id: int):
   post = Post.objects.get(id=post_id)
-  post.downvote += 1
+  post.downvotes += 1
   post.save()
   return HttpResponseRedirect(reverse('homepage'))
 

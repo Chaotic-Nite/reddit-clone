@@ -12,7 +12,7 @@ class CommonFieldsMixin(models.Model):
     votes = models.IntegerField(default=0)
 
     def votes(self):
-        return self.upvote - self.downvote
+        return self.upvotes - self.downvotes
 
     class Meta:
         abstract = True

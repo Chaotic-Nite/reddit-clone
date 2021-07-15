@@ -11,10 +11,7 @@ from post_app.models import Post
 
 # Need to see about making these views cleaner
 def index(request):
-    if Post.objects.filter(pk=0).exists():
-        posts = Post.objects.all()
-    else:
-        posts = []
+    posts = Post.objects.all()
     if SubReddit.objects.filter(pk=0).exists():    
         subreddits = SubReddit.objects.all()
         sub_r_count = SubReddit.objects.all().count()
