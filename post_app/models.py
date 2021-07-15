@@ -7,7 +7,7 @@ from django.utils import timezone
 class CommonFieldsMixin(models.Model):
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
-    author = models.ForeignKey(RedditUser, on_delete=models.CASCADE)
+    author = models.ForeignKey(RedditUser, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     votes = models.IntegerField(default=0)
 

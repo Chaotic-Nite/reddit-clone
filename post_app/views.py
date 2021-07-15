@@ -32,7 +32,8 @@ def sort_view(request):
 
 def post_detail(request, post_id: int):
   post = Post.objects.get(id=post_id)
-  return render(request, 'post_detail.html', {'post': post})
+  comments = Comment.objects.filter(post=post)
+  return render(request, 'post_detail.html', {'post': post, 'comments': comments})
 
 
 @login_required
