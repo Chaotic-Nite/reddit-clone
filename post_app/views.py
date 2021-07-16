@@ -9,6 +9,12 @@ from comments.models import Comment
 from comments.forms import AddCommentForm
 from user_app.models import RedditUser
 
+def index(request):
+  # if Post.objects.filter(pk=0).exists():
+  posts = Post.objects.all()
+  # else:
+  # posts = False
+  return render(request, 'index.html', {'posts': posts})
 
 @login_required
 def upvote_view(request, post_id: int):
@@ -39,15 +45,15 @@ def post_detail(request, post_id: int):
 
 
 @login_required
-def add_post(request):
+def add_post(request, id):
   if request.method == 'POST':
     form = AddPostForm(request.POST)
     if form.is_valid():
       data = form.cleaned_data
       post = form.save(commit=False)
       post.author = request.user
-      # if not data['subreddit']:
-      #   post.subreddit = SubReddit.objects.get(name=name)
+      if not data.get("subbreddit"):
+        post.subreddit = SubReddit.objects.get(id=id)
       post.save()
     return HttpResponseRedirect(reverse('homepage'))
   form = AddPostForm()
