@@ -16,7 +16,7 @@ urlpatterns = [
     path('delete_comment/<int:id>/', comment_view.delete_view, name='delete_comment'),
     # Posts
     path('post/<int:post_id>', post_view.post_detail, name='post_detail'),
-    path('addpost/', post_view.add_post),
+    path('addpost/<int:id>/', post_view.add_post),
     path('upvote/<int:post_id>/', post_view.upvote_view, name='upvote'),
     path('downvote/<int:post_id>/', post_view.downvote_view, name='downvote'),
     path('post/delete/<int:id>/', post_view.delete_view, name='post_delete'),
@@ -33,8 +33,8 @@ urlpatterns = [
     # Subreddits
     path('addsubreddit/', subreddit_view.add_subreddit, name='addsubreddit'),
     path('r/<str:name>/', subreddit_view.subredditview, name='subreddit'),
-    # path('r/<str:name>/new/', subreddit_view.subredditnew, name='subredditnew'),
-    # path('r/<str:name>/hot/', subreddit_view.subreddithot, name='subreddithot'),
+    path('r/<str:name>/new/', subreddit_view.subredditnew, name='subredditnew'),
+    path('r/<str:name>/hot/', subreddit_view.subreddithot, name='subreddithot'),
     path('subscribed/<int:id>/', subreddit_view.subscribe, name='subscribe'),
     path('unsubscribed/<int:id>/', subreddit_view.unsubscribe, name='unsubscribe'),
 

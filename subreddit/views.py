@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def add_subreddit(request):
-    html = "addsubreddit.html"
+    html = "subreddit/addsubreddit.html"
 
     if request.method == "POST":
         form = AddSubRedditForm(request.POST)
@@ -24,7 +24,7 @@ def add_subreddit(request):
                 is_moderator=True,
             )
             subscriber = RedditUser.objects.get(id=request.user.id)
-            moderator = Moderator.objects.get(user=request.user)
+            moderator = Moderator.objects.filter(user=request.user).first()
             subscriber.sub_reddits.add(subreddit)
             subreddit.moderator.add(moderator)
             subreddit.save()
@@ -44,8 +44,9 @@ def subredditview(request, name):
     else:
         moderators = None
     current_path = f'/r/{subreddit.name}/'
-    subscribe_list = SubReddit.objects.filter(subscriber=request.user.id)
-    return render(request, 'subreddit.html', {"subreddit": subreddit, "posts": posts, "current_path": current_path,"moderators": moderators, "subscribe_list": subscribe_list})
+    
+    subscribe_list = request.user.sub_reddits.all()
+    return render(request, 'subreddit/subreddit.html', {"subreddit": subreddit, "posts": posts, "current_path": current_path,"moderators": moderators, "subscribe_list": subscribe_list})
 
 
 @login_required
