@@ -42,9 +42,9 @@
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <label class="btn btn-secondary active"> <input type="radio" name="options" id="option1" checked> All </label>
     <label class="btn btn-secondary"> <input type="radio" name="options" id="option2"> <a
-        href="{% url 'subreddithot' subreddit.name %}" style="text-decoration: none; color:white">Hot</a> </label>
+        href="{% url 'subreddit' subreddit.name %}" style="text-decoration: none; color:white">Hot</a> </label>
     <label class="btn btn-secondary"> <input type="radio" name="options" id="option3"> <a
-        href="{% url 'subredditnew' subreddit.name %}" style="text-decoration: none; color:white">New</a> </label>
+        href="{% url 'subreddit' subreddit.name %}" style="text-decoration: none; color:white">New</a> </label>
   </div>
   {% endif %}
 

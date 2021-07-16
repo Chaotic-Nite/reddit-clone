@@ -2,6 +2,7 @@
 
 from django.db import migrations, models
 import django.utils.timezone
+import mptt
 
 
 class Migration(migrations.Migration):
@@ -9,6 +10,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('post_app', '0001_initial'),
     ]
 
     operations = [
@@ -24,6 +26,8 @@ class Migration(migrations.Migration):
                 ('rght', models.PositiveIntegerField(editable=False)),
                 ('tree_id', models.PositiveIntegerField(db_index=True, editable=False)),
                 ('mptt_level', models.PositiveIntegerField(editable=False)),
+                ('parent', mptt.fields.TreeForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='comments.comment')),
+                ('post', models.ForeignKey(default=True, on_delete=django.db.models.deletion.CASCADE, to='post_app.post')),
             ],
             options={
                 'abstract': False,

@@ -26,7 +26,7 @@ def add_subreddit(request):
             subscriber = RedditUser.objects.get(id=request.user.id)
             moderator = Moderator.objects.filter(user=request.user).first()
             subscriber.sub_reddits.add(subreddit)
-            subreddit.moderator.add(moderator)
+            # subreddit.moderator.add(moderator)
             subreddit.save()
         return HttpResponseRedirect(reverse('homepage'))
 

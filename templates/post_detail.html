@@ -3,6 +3,7 @@
 
 <br />
 
+
 <h1>Post Content</h1>
 
 Title: {{post.title}}
@@ -15,3 +16,6 @@ Created at: {{post.created_at}}
 <br />
 <button style="margin-right: 5px;"><a href="/post/{{post.id}}/edit">Edit Post</a></button>
 <button style="margin-top: 10px;"><a href="/post/{{post.id}}/delete">Delete Post</a></button>
+
+
+{% include 'comments/comments.html' %}

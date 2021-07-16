@@ -5,33 +5,32 @@
     <h3>
       <ul>
         <li>
-          <a href="/r/{{post.subreddit}}/post/{{post.id}}">{{ post.title }}</a>
+          <a href="/post/{{post.id}}">{{ post.title }}</a>
         </li>
       </ul>
     </h3>
     <ul>
 
 
-
       <span>
         {% if user.is_authenticated %}
         <button><a href="/upvote/{{post.id}}?next={{ request.path }}"
             style="text-decoration:none; color:green">⇧</a></button>
-        {{post.score}}
+        {{post.votes}}
         <button><a href="/downvote/{{post.id}}?next={{ request.path }}"
             style="text-decoration:none; color:red">⇩</a></button>
         {% for moderator in moderators %}
         {% if post.author == request.user or request.user == moderator %}
-        <button><a href="/delete/{{post.id}}/" style="text-decoration: none; color: red">Delete</a></button>
+        <button><a href="/post/{{post.id}}/delete/" style="text-decoration: none; color: red">Delete</a></button>
         {% endif %}
         {% endfor %}
         {% else %}
-        <button><a href="/login?next={{ request.path }}" style="text-decoration:none; color:green">⇧</a></button>
-        {{post.score}}
+        <button><a href="/upvotes/{{post.id}}?next={{ request.path }}" style="text-decoration:none; color:green">⇧</a></button>
+        {{post.votes}}
         <button><a href="/login?next={{ request.path }}" style="text-decoration:none; color:red">⇩</a></button>
         {%endif%}
       </span>
-      Submitted on {{post.date_created}} by {{post.author}} from <a
+      Submitted on {{post.created_at}} by {{post.author}} from <a
         href="/r/{{post.subreddit}}">r/{{ post.subreddit }}</a>
     </ul>
   </div>

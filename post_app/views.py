@@ -1,3 +1,4 @@
+from django.db.models import fields
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, HttpResponseRedirect, reverse
 from post_app.models import Post
@@ -20,7 +21,8 @@ def upvote_view(request, post_id: int):
   post = Post.objects.get(id=post_id)
   post.upvotes += 1
   post.save()
-  return HttpResponseRedirect(reverse('homepage'))
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('homepage')))
+
 
 
 @login_required
@@ -28,7 +30,8 @@ def downvote_view(request, post_id: int):
   post = Post.objects.get(id=post_id)
   post.downvotes += 1
   post.save()
-  return HttpResponseRedirect(reverse('homepage'))
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('homepage')))
+
 
 def sort_view(request):
   posts = sorted(Post.objects.all(), key= lambda post: post.votes(), reverse=True)
@@ -37,7 +40,8 @@ def sort_view(request):
 
 def post_detail(request, post_id: int):
   post = Post.objects.get(id=post_id)
-  return render(request, 'post_detail.html', {'post': post})
+  comments = Comment.objects.filter(post=post)
+  return render(request, 'post_detail.html', {'post': post, 'comments': comments})
 
 
 @login_required
@@ -104,13 +108,19 @@ def postview(request, id, name):
     'form': form, "moderators":moderators, "commentator": commentator})
 
 
+# def delete_view(request, id):
+    # post = Post.objects.get(id=id)
+    # form = PostDeleteForm()
+    # data = form.cleaned_data
+    # post.type_post = data['type_post']
+    # post.content = data['data']
+    # post.url_post = data['url_post']
+    # post.image = data['image']
+    # post.save()
+    # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 def delete_view(request, id):
     post = Post.objects.get(id=id)
-    form = PostDeleteForm()
-    data = form.cleaned_data
-    post.type_post = data['type_post']
-    post.content = data['data']
-    post.url_post = data['url_post']
-    post.image = data['image']
-    post.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    post.delete()
+    return HttpResponseRedirect(reverse('homepage'))
+
