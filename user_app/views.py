@@ -11,10 +11,7 @@ from post_app.models import Post
 
 # Need to see about making these views cleaner
 def index(request):
-    if Post.objects.filter(pk=0).exists():
-        posts = Post.objects.all()
-    else:
-        posts = []
+    posts = Post.objects.all()
     if SubReddit.objects.filter(pk=0).exists():    
         subreddits = SubReddit.objects.all()
         sub_r_count = SubReddit.objects.all().count()
@@ -28,10 +25,7 @@ def index(request):
 
 
 def new(request):
-    if Post.objects.filter(pk=0).exists():
-        posts = Post.objects.all().order_by("-date_created")
-    else:
-        posts = []
+    posts = Post.objects.all().order_by("-created_at")
     if SubReddit.objects.filter(pk=0).exists():    
         subreddits = SubReddit.objects.all()
         sub_r_count = SubReddit.objects.all().count()
@@ -45,10 +39,7 @@ def new(request):
 
 
 def hot(request):
-    if Post.objects.filter(pk=0).exists():
-        posts = sorted(Post.objects.all(), key=lambda post: post.like_dislike(), reverse=True)
-    else:
-        posts = []
+    posts = sorted(Post.objects.all(), key=lambda post: post.votes(), reverse=True)
     if SubReddit.objects.filter(pk=0).exists():    
         subreddits = SubReddit.objects.all()
         sub_r_count = SubReddit.objects.all().count()

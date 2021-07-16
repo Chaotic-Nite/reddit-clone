@@ -1,26 +1,24 @@
 {% load mptt_tags %}
 
-<p>
 
 <ul class="root">
     {% recursetree comments %}
-
     <p>{{node.body}}</p>
     <p>
         <span>
 
             {%if user %}
-            <button><a href="upvote/{{node.id}}?next={{ request.path }}"style="text-decoration:none; color:green">⇧</a></button>
-            {{node.score}}
-            <button><a href="downvote/{{node.id}}?next={{ request.path }}"style="text-decoration:none; color:red">⇩</a></button>
+            <button><a href="/comment/upvote/{{node.id}}?next={{ request.path }}"style="text-decoration:none; color:green">⇧</a></button>
+            {{node.votes}}
+            <button><a href="/comment/downvote/{{node.id}}?next={{ request.path }}"style="text-decoration:none; color:red">⇩</a></button>
             {% else %}
             <button><a href="/login?next={{ request.path }}" style="text-decoration:none; color:green">⇧</a></button>
-            {{node.score}}
+            {{node.votes}}
             <button><a href="/login?next={{ request.path }}" style="text-decoration:none; color:red">⇩</a></button>
             {%endif%}
         </span>
-        Created on {{node.date_created}}
-        by {{node.user}}
+        Created on {{node.created_at}}
+        by {{node.author}}
     </p>
     {% if user.is_authenticated%}
     <form method="post">
@@ -74,7 +72,6 @@
     </ul>
 
     {% endif %}
-
     {% endrecursetree %}
 
 </ul>
