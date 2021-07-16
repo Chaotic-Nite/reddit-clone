@@ -15,7 +15,8 @@ def upvote_view(request, post_id: int):
   post = Post.objects.get(id=post_id)
   post.upvotes += 1
   post.save()
-  return HttpResponseRedirect(reverse('homepage'))
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('homepage')))
+
 
 
 @login_required
@@ -23,7 +24,8 @@ def downvote_view(request, post_id: int):
   post = Post.objects.get(id=post_id)
   post.downvotes += 1
   post.save()
-  return HttpResponseRedirect(reverse('homepage'))
+  return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('homepage')))
+
 
 def sort_view(request):
   posts = sorted(Post.objects.all(), key= lambda post: post.votes(), reverse=True)

@@ -8,9 +8,9 @@
         <span>
 
             {%if user %}
-            <button><a href="/upvote/{{node.id}}?next={{ request.path }}"style="text-decoration:none; color:green">⇧</a></button>
+            <button><a href="/comment/upvote/{{node.id}}?next={{ request.path }}"style="text-decoration:none; color:green">⇧</a></button>
             {{node.votes}}
-            <button><a href="/downvote/{{node.id}}?next={{ request.path }}"style="text-decoration:none; color:red">⇩</a></button>
+            <button><a href="/comment/downvote/{{node.id}}?next={{ request.path }}"style="text-decoration:none; color:red">⇩</a></button>
             {% else %}
             <button><a href="/login?next={{ request.path }}" style="text-decoration:none; color:green">⇧</a></button>
             {{node.votes}}

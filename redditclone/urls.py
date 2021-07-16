@@ -11,8 +11,8 @@ from subreddit import views as subreddit_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Comments
-    path('upvote/<int:comment_id>/', comment_view.up_vote, name='comment_upvote'),
-    path('downvote/<int:comment_id>/', comment_view.down_vote, name='comment_downvote'),
+    path('comment/upvote/<int:comment_id>/', comment_view.up_vote, name='comment_upvote'),
+    path('comment/downvote/<int:comment_id>/', comment_view.down_vote, name='comment_downvote'),
     path('delete_comment/<int:id>/', comment_view.delete_view, name='delete_comment'),
     # Posts
     path('post/<int:post_id>', post_view.post_detail, name='post_detail'),
