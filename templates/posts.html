@@ -19,11 +19,11 @@
         {{post.votes}}
         <button><a href="/downvote/{{post.id}}?next={{ request.path }}"
             style="text-decoration:none; color:red">⇩</a></button>
-        {% for moderator in moderators %}
-        {% if post.author == request.user or request.user == moderator %}
+       
+        {% if post.author == request.user or request.user in moderators %}
         <button><a href="/post/{{post.id}}/delete/" style="text-decoration: none; color: red">Delete</a></button>
         {% endif %}
-        {% endfor %}
+       
         {% else %}
         <button><a href="/upvotes/{{post.id}}?next={{ request.path }}" style="text-decoration:none; color:green">⇧</a></button>
         {{post.votes}}

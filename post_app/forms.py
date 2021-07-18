@@ -10,7 +10,7 @@ class AddPostForm(forms.ModelForm):
   
   class Meta:
     model = Post
-    fields = ['title', 'type_post', 'url_post', 'content', 'image']
+    fields = ['title', 'type_post', 'url_post', 'content', 'image', 'subreddit']
 
 
 class PostEditForm(forms.ModelForm):
