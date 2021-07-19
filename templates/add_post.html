@@ -3,8 +3,10 @@
 <html>
 
 <body>
-
-    <form class='form' method="post" action="">
+  <div class="form-group">
+    <form method="POST" enctype="multipart/form-data"></form>
+  </div>
+    <form class='form' method="post" action="" enctype="multipart/form-data">
       {% csrf_token %}
       <div class='field'>
         <label class="label" for="{{ field.auto_id }}">{{ form.title.label }}:</label>

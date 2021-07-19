@@ -1,4 +1,3 @@
-import subreddit
 from django.shortcuts import render
 from user_app.forms import LoginForm, SignupForm
 from django.shortcuts import render, HttpResponseRedirect, redirect
@@ -32,8 +31,6 @@ def new(request):
     if SubReddit.objects.filter(pk=0).exists():    
         subreddits = SubReddit.objects.all()
         sub_r_count = SubReddit.objects.all().count()
-        subscriber = RedditUser.objects.get(id=request.user.id)
-        subscribe_list = subscriber.sub_reddit.all()
     else:
         subreddits = []
         sub_r_count = 0

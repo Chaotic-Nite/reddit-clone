@@ -38,7 +38,6 @@
 </div>
 
 
-
 <hr>
 <div style="margin-left:50px;">
     {% if request.path == '/' %}
@@ -80,9 +79,11 @@
 
 
 
-
-
-
+<div class="add">
+    <!-- <button onclick="location.href='/addpost'"></button>
+        www.example.com</button> -->
+    <button onclick="location.href='/addpost'" style="margin-left: 360px;">Add Post</button>
+</div>
 <div class="row">
     <div class="col-8" style="margin-left:40px;">
         {% include 'posts.html' %}

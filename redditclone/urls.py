@@ -16,12 +16,13 @@ urlpatterns = [
     path('delete_comment/<int:id>/', comment_view.delete_view, name='delete_comment'),
     # Posts
     path('post/<int:post_id>', post_view.post_detail, name='post_detail'),
-    path('addpost/<int:id>/', post_view.add_post),
+    path('addpost/', post_view.add_post),
     path('upvote/<int:post_id>/', post_view.upvote_view, name='upvote'),
     path('downvote/<int:post_id>/', post_view.downvote_view, name='downvote'),
     path('post/<int:id>/delete/', post_view.delete_view, name='post_delete'),
     path('sorted/', post_view.sort_view),
     path('post/<int:post_id>/edit/', post_view.edit_post),
+    path('upload', post_view.image_upload_view),
     # Users
     path('signup/', user_view.signup_view, name='signup'),
     path('login/', user_view.login_view, name='login'),
