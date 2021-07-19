@@ -45,19 +45,28 @@ def post_detail(request, post_id: int):
 
 
 @login_required
-def add_post(request, id):
+def add_post(request):
   if request.method == 'POST':
-    form = AddPostForm(request.POST)
+    form = AddPostForm(request.POST, request.FILES)
     if form.is_valid():
       data = form.cleaned_data
       post = form.save(commit=False)
       post.author = request.user
-      if not data.get("subbreddit"):
-        post.subreddit = SubReddit.objects.get(id=id)
       post.save()
     return HttpResponseRedirect(reverse('homepage'))
   form = AddPostForm()
   return render(request, 'add_post.html', {'form': form})
+
+
+def image_upload_view(request):
+  if request.method == 'POST':
+    form = AddPostForm(request.POST, request.FILES)
+    if form.is_valid():
+      form.save()
+      img_obj = form.instance
+      return render(request, 'main.html.html', {'form': form, 'img_obj': img_obj})
+  form = AddPostForm()
+  return render(request, 'main.html', {'form': form})
 
 
 

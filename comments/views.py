@@ -4,6 +4,8 @@ from comments.models import Comment
 from django.contrib.auth.decorators import login_required
 
 
+
+
 @login_required
 def up_vote(request, comment_id):
     up_post = Comment.objects.get(id=comment_id)
