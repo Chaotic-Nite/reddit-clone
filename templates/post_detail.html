@@ -8,26 +8,27 @@
 
 Title: {{post.title}}
 <br />
-Url: {{post.url_post}}
+<!-- Url: {{post.url_post}} -->
 <br />
 Post Content: {{post.content}}
 </br>
 Created at: {{post.created_at}}
 <br />
-<img src="{{post.image.url}}" alt="post image" height="80px" width="80px">
+<br />
+{% if post.image %}<img src="{{post.image.url}}" alt="post image" height="80px" width="80px">{% endif %}
+<h4>Add Comment</h4>
 {% for comment in comments %}
-  <div class="comment">
-    <p class="info">
-      Comment {{ forloop.counter }} by {{ comment.name }}
-      {{ comment.created }}
-    </p>
-    {{ comment.body|linebreaks }}
-  </div>
-{% empty %}
-  <p>There are no comments yet.</p>
+<div class="comment">
+  <p class="info">
+  </p>
+  {{ comment.body }}
+  <br />
+  {{comment.created_at}}
+</div>
+<a href="/comment/edit/{{comment.id}}">Edit Comment</a>
+<a href="/comment/delete/{{comment.id}}">Delete Comment</a>
 {% endfor %}
+{% include 'comments/addcomment.html'%}
 <button style="margin-right: 5px;"><a href="/post/{{post.id}}/edit">Edit Post</a></button>
 <button style="margin-top: 10px;"><a href="/post/{{post.id}}/delete">Delete Post</a></button>
-{% include 'comments/comments.html' %}
-
 
