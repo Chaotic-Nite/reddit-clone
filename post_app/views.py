@@ -41,7 +41,8 @@ def sort_view(request):
 def post_detail(request, post_id: int):
   post = Post.objects.get(id=post_id)
   comments = Comment.objects.filter(post=post)
-  return render(request, 'post_detail.html', {'post': post, 'comments': comments})
+  form = AddCommentForm()
+  return render(request, 'post_detail.html', {'post': post, 'comments': comments, 'form': form})
 
 
 @login_required
@@ -58,15 +59,15 @@ def add_post(request):
   return render(request, 'add_post.html', {'form': form})
 
 
-def image_upload_view(request):
-  if request.method == 'POST':
-    form = AddPostForm(request.POST, request.FILES)
-    if form.is_valid():
-      form.save()
-      img_obj = form.instance
-      return render(request, 'main.html.html', {'form': form, 'img_obj': img_obj})
-  form = AddPostForm()
-  return render(request, 'main.html', {'form': form})
+# def image_upload_view(request):
+#   if request.method == 'POST':
+#     form = AddPostForm(request.POST, request.FILES)
+#     if form.is_valid():
+#       form.save()
+#       img_obj = form.instance
+#       return render(request, 'main.html.html', {'form': form, 'img_obj': img_obj})
+#   form = AddPostForm()
+#   return render(request, 'main.html', {'form': form})
 
 
 
@@ -74,12 +75,12 @@ def image_upload_view(request):
 def edit_post(request, post_id: int):
   posts = Post.objects.get(id=post_id)
   if request.method == 'POST':
-    form = AddPostForm(request.POST, instance=posts)
+    form = AddPostForm(request.POST, request.FILES, instance=posts,)
     if form.is_valid():
       form.save()
     return HttpResponseRedirect(reverse('homepage'))
   form = AddPostForm(instance=posts)
-  return render(request, 'generic_form.html', {'form': form})
+  return render(request, 'add_post.html', {'form': form})
 
 def postview(request, id, name):
     post = Post.objects.get(id=id)
@@ -132,4 +133,10 @@ def delete_view(request, id):
     post = Post.objects.get(id=id)
     post.delete()
     return HttpResponseRedirect(reverse('homepage'))
+
+def image_url(self):
+  if self.image:
+    return self.image.url
+  return '#'
+
 

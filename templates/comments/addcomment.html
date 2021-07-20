@@ -1,11 +1,11 @@
-<form method="post">
+<form method="post" action="/comment/add/{{post.id}}/">
   {% csrf_token %}
   <div id="hidden" style="display:none;">
-    {{ form.body }}
   </div>
-  <button onclick="zFunction()" id="reply">Comment</button>
+  {{ form}}
+  <button onclick="zFunction()" id="reply">Add Comment</button>
   <p>
-    <input id="hiddenbutton" style="display:none;" type="submit" value="Add comment">
+    <!-- <input id="hiddenbutton" style="display:none;" type="submit" value="Add comment"> -->
 </form>
 
 <script>

@@ -13,7 +13,9 @@ urlpatterns = [
     # Comments
     path('comment/upvote/<int:comment_id>/', comment_view.up_vote, name='comment_upvote'),
     path('comment/downvote/<int:comment_id>/', comment_view.down_vote, name='comment_downvote'),
-    path('delete_comment/<int:id>/', comment_view.delete_view, name='delete_comment'),
+    path('comment/edit/<int:comment_id>/', comment_view.edit_comment),
+    path('comment/delete/<int:comment_id>/', comment_view.deletecomment, name='delete_comment'),
+    path('comment/add/<int:post_id>/', comment_view.addcomment),
     # Posts
     path('post/<int:post_id>', post_view.post_detail, name='post_detail'),
     path('addpost/', post_view.add_post),
@@ -22,7 +24,7 @@ urlpatterns = [
     path('post/<int:id>/delete/', post_view.delete_view, name='post_delete'),
     path('sorted/', post_view.sort_view),
     path('post/<int:post_id>/edit/', post_view.edit_post),
-    path('upload', post_view.image_upload_view),
+    # path('upload', post_view.image_upload_view),
     # Users
     path('signup/', user_view.signup_view, name='signup'),
     path('login/', user_view.login_view, name='login'),
