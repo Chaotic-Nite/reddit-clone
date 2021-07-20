@@ -9,7 +9,6 @@
 Title: {{post.title}}
 <br />
 <!-- Url: {{post.url_post}} -->
-<br />
 Post Content: {{post.content}}
 </br>
 Created at: {{post.created_at}}
@@ -24,11 +23,21 @@ Created at: {{post.created_at}}
   {{ comment.body }}
   <br />
   {{comment.created_at}}
+  <br />
+  Comment Score: {{comment.votes}}
+
+  <button><a href="/comment/upvote/{{comment.id}}?next={{ request.path }}"
+    style="text-decoration:none; color:green">⇧</a></button>
+<button><a href="/comment/downvote/{{comment.id}}?next={{ request.path }}"
+    style="text-decoration:none; color:red">⇩</a></button>
 </div>
 <a href="/comment/edit/{{comment.id}}">Edit Comment</a>
 <a href="/comment/delete/{{comment.id}}">Delete Comment</a>
+<br />
 {% endfor %}
+<br />
 {% include 'comments/addcomment.html'%}
+<br />
 <button style="margin-right: 5px;"><a href="/post/{{post.id}}/edit">Edit Post</a></button>
 <button style="margin-top: 10px;"><a href="/post/{{post.id}}/delete">Delete Post</a></button>
 
