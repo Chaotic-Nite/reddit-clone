@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.base import View
 from user_app.forms import LoginForm, SignupForm
 from django.shortcuts import render, HttpResponseRedirect, redirect
 from django.contrib.auth import login, authenticate, logout
@@ -87,7 +88,8 @@ def login_view(request):
     form = LoginForm()
     return render(request, 'login.html', {'form': form})
 
-@login_required
-def logout_view(request):
-    logout(request)
-    return HttpResponseRedirect(reverse('login'))
+
+class LogOutView(View):
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse('login'))
