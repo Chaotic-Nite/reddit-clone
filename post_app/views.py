@@ -8,13 +8,16 @@ from subreddit.models import SubReddit, Moderator
 from comments.models import Comment
 from comments.forms import AddCommentForm
 from user_app.models import RedditUser
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import View
 
-def index(request):
-  # if Post.objects.filter(pk=0).exists():
-  posts = Post.objects.all()
-  # else:
-  # posts = False
-  return render(request, 'index.html', {'posts': posts})
+
+class indexView(View):
+  def get(self,request):
+    template_name = 'index.html'
+    posts = Post.objects.all()
+    context = {'posts': posts}
+    return render(request, template_name, context)
 
 @login_required
 def upvote_view(request, post_id: int):
@@ -32,17 +35,31 @@ def downvote_view(request, post_id: int):
   post.save()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('homepage')))
 
+class SortView(View):
+  def get(self, request):
+    template_name = 'index.html'
+    posts = sorted(Post.objects.all(), key= lambda post: post.votes(), reverse=True)
+    context = {'posts': posts}
+    return render(request, template_name, context)
+# def sort_view(request):
+#   posts = sorted(Post.objects.all(), key= lambda post: post.votes(), reverse=True)
+#   return render(request, 'index.html', {'posts': posts})
 
-def sort_view(request):
-  posts = sorted(Post.objects.all(), key= lambda post: post.votes(), reverse=True)
-  return render(request, 'index.html', {'posts': posts})
+class PostDetailView(View):
+  def get(self,request, post_id: int):
+    template_name = 'post_detail.html'
+    post = Post.objects.get(id=post_id)
+    comments = Comment.objects.filter(post=post)
+    form = AddCommentForm
+    context = {'post': post, 'comments': comments, 'form': form}
+    return render(request, template_name, context)
+# def post_detail(request, post_id: int):
+#   post = Post.objects.get(id=post_id)
+#   comments = Comment.objects.filter(post=post)
+#   form = AddCommentForm()
+#   return render(request, 'post_detail.html', {'post': post, 'comments': comments, 'form': form})
 
 
-def post_detail(request, post_id: int):
-  post = Post.objects.get(id=post_id)
-  comments = Comment.objects.filter(post=post)
-  form = AddCommentForm()
-  return render(request, 'post_detail.html', {'post': post, 'comments': comments, 'form': form})
 
 
 @login_required
@@ -128,6 +145,7 @@ def postview(request, id, name):
     # post.image = data['image']
     # post.save()
     # return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 def delete_view(request, id):
     post = Post.objects.get(id=id)
