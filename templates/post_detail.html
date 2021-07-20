@@ -20,10 +20,10 @@ Created at: {{post.created_at}}
 {% for comment in comments %}
 <div class="comment">
   <p class="info">
-    <!-- Comment {{ forloop.counter }} by {{ post.author }} -->
-    {{ comment.created }}
   </p>
   {{ comment.body }}
+  <br />
+  {{comment.created_at}}
 </div>
 <a href="/comment/edit/{{comment.id}}">Edit Comment</a>
 <a href="/comment/delete/{{comment.id}}">Delete Comment</a>
