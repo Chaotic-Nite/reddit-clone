@@ -1,44 +1,64 @@
 {% load static %}
 <!-- {% static 'static_jquery/js/jquery.js' %} -->
 <html>
+<head>
+  <title>Reddit</title>
+  <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/reddit-2.svg" type="image/x-icon">
 
-<body>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <title>Reddit</title>
+  <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/reddit-2.svg" type="image/x-icon">
+</head>
+
+<body style='margin-left: 50px;'>
+  {% include 'header_content.html' %}
   <div class="form-group">
     <form method="POST" enctype="multipart/form-data"></form>
   </div>
+  <div>
     <form class='form' method="post" action="" enctype="multipart/form-data">
       {% csrf_token %}
-      <div class='field'>
+      <div class="row">
+      <div class="col-3"></div>
+      <div class="card col-6">
+
+      <div class='field col-4'>
         <label class="label" for="{{ field.auto_id }}">{{ form.title.label }}:</label>
         {{ form.title }} 
       </div>
       
-      <div class='field'>
+      <div class='field col-4'>
         <label class="label" for="{{ field.auto_id }}">{{ form.type_post.label }}:</label>
         {{ form.type_post }} 
       </div>
       
-      <div class='field' id='Text'>
+      <div class='field col-4' id='Text'>
         <label class="label" for="{{ field.auto_id }}">{{ form.content.label }}:</label>
         {{ form.content }} 
       </div>   
-      <div class='field' id='Link'>
+      <div class='field col-4' id='Link'>
         <label class="label" for="{{ field.auto_id }}">{{ form.url_post.label }}:</label>
         {{ form.url_post }} 
       </div>   
-      <div class='field' id='Image'>
+      <div class='field col-4' id='Image'>
         <label class="label" for="{{ field.auto_id }}">{{ form.content.label }}:</label>
         {{ form.image }} 
       </div>
      
-      <div class='field' id='subreddit'>
+      <div class='field col-4' id='subreddit'>
         <label class="label" for="{{ field.auto_id }}">{{ form.subreddit.label }}:</label>
         {{ form.subreddit }} 
       </div>
       <input type="submit" value="Submit" class='button submit-bttn'/>
-
+      </div>
+      </div>
     </form>
-
+    </div>
     <script type='text/javascript' src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script> 
       // wait for the DOM to be loaded 

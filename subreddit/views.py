@@ -9,8 +9,6 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def add_subreddit(request):
-    html = "subreddit/addsubreddit.html"
-
     if request.method == "POST":
         form = AddSubRedditForm(request.POST)
         if form.is_valid():
@@ -32,7 +30,7 @@ def add_subreddit(request):
 
     form = AddSubRedditForm()
 
-    return render(request, html, {"form": form})
+    return render(request, 'generic_form.html', {"form": form})
 
 
 def subredditview(request, name):

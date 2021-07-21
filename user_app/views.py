@@ -11,19 +11,14 @@ from post_app.models import Post
 
 # Need to see about making these views cleaner
 def index(request):
-    # if Post.objects.filter(pk=0).exists():
     posts = Post.objects.all()
-    # else:
-        # posts = []
-    # if SubReddit.objects.filter(pk=0).exists():    
     subreddits = SubReddit.objects.all()
     sub_r_count = SubReddit.objects.all().count()
-    subscriber = RedditUser.objects.get(id=request.user.id)
-    subscribe_list = subscriber.sub_reddits.all()
-    # else:
-        # subreddits = []
-        # sub_r_count = 0
-        # subscribe_list = []
+    try:
+        subscriber = RedditUser.objects.get(id=request.user.id)
+        subscribe_list = subscriber.sub_reddits.all()
+    except:
+        subscribe_list = {}
     return render(request, 'main.html', {'posts': posts, 'subreddits': subreddits, "sub_r_count": sub_r_count, "subscribe_list": subscribe_list})
 
 

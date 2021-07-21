@@ -1,3 +1,4 @@
+<html>
 <head>
     <title>Reddit</title>
     <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/reddit-2.svg" type="image/x-icon">
@@ -11,48 +12,22 @@
     <title>Reddit</title>
     <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/reddit-2.svg" type="image/x-icon">
 </head>
-
-<div class="row">
-    <div class="col-sm-9"></div>
-    <div class="col-sm-3">
-        {% if user.is_authenticated %}
-        Logged in as : {{user}}
-        <a href="/logout?next={{ request.path }}">
-            Logout</a> <br />
-            {%else%}
-            <a href="/login?next={{ request.path }}">Login</a> |
-            <a href="/signup?next={{request.path}}"> Sign up </a>
-            {%endif%}
-        </div>
-    </div>
-    
-    
-    <hr style="margin:0;">
-    <div class="row">
-        
-        <div class="col-sm-1"> </div>
-        <div class="col-sm-10" style="height:20vh;margin:0;text-align:center;">
-            <h1 style="font-size:100px; text-decoration:none;">Reddit</h1>
-        </div>
-    <div class="col-sm-1"></div>
-</div>
-
-
-<hr>
-<div style="margin-left:50px;">
+<body style='margin-left: 50px;'>
+{% include 'header_content.html' %}
+<div >
     {% if request.path == '/' %}
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-secondary active"> <input type="radio" name="options" id="option1" checked> All </label>
         <label class="btn btn-secondary"> <input type="radio" name="options" id="option2"
-                onclick="location.href='/hot/'">
+            onclick="location.href='/hot/'">
             Hot </label>
-        <label class="btn btn-secondary"> <input type="radio" name="options" id="option3"
+            <label class="btn btn-secondary"> <input type="radio" name="options" id="option3"
                 onclick="location.href='/new/'">
             New </label>
-    </div>
-    
-
-    {% elif request.path == '/hot/' %}
+        </div>
+        
+        
+        {% elif request.path == '/hot/' %}
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-secondary"> <input type="radio" name="options" id="option1" onclick="location.href='/'">
             All
@@ -60,9 +35,9 @@
         <label class="btn btn-secondary active"> <input type="radio" name="options" id="option2" checked> Hot </label>
         <label class="btn btn-secondary"> <input type="radio" name="options" id="option3"
                 onclick="location.href='/new/'">
-            New </label>
-    </div>
-
+                New </label>
+            </div>
+            
     {% elif request.path == '/new/' %}
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-secondary"> <input type="radio" name="options" id="option1" onclick="location.href='/'">
@@ -70,9 +45,9 @@
         </label>
         <label class="btn btn-secondary"> <input type="radio" name="options" id="option2"
                 onclick="location.href='/hot/'">
-            Hot </label>
-        <label class="btn btn-secondary active"> <input type="radio" name="options" id="option3" checked> New </label>
-    </div>
+                Hot </label>
+                <label class="btn btn-secondary active"> <input type="radio" name="options" id="option3" checked> New </label>
+            </div>
     {% endif %}
 </div>
 </p>
@@ -90,27 +65,29 @@
         {% if user.is_authenticated %}
         <a href="/addsubreddit/" style="text-decoration:none;color:white;"><button type="button" class="btn btn-success"
                 style="width:100%; margin-bottom:10px">Create Community</button></a>
-        {%endif%}
-        <div class="card">
-            <h4 style="text-align:center;margin-top:10px;margin-bottom:0px;">Subreddits ({{sub_r_count}})</h4>
-            <hr>
+                {%endif%}
+                <div class="card">
+                    <h4 style="text-align:center;margin-top:10px;margin-bottom:0px;">Subreddits ({{sub_r_count}})</h4>
+                    <hr>
 
-            {% for subreddit in subreddits %}
-                {% if request.user.is_authenticated %}
+                    {% for subreddit in subreddits %}
+                    {% if request.user.is_authenticated %}
                     {% if subreddit not in subscribe_list %}
-                        <p style="margin:10px;"><a href="/r/{{subreddit.name}}/">/r/{{subreddit}}</a> <a
+                    <p style="margin:10px;"><a href="/r/{{subreddit.name}}/">/r/{{subreddit}}</a> <a
                             href="/subscribed/{{subreddit.id}}/" style="text-decoration: none; color: rgb(64, 185, 64)">Join</a></p>
-                    {% else %}
-                        <p style="margin:10px;"><a href="/r/{{subreddit.name}}/">/r/{{subreddit}}</a> <a
+                            {% else %}
+                            <p style="margin:10px;"><a href="/r/{{subreddit.name}}/">/r/{{subreddit}}</a> <a
                             href="/unsubscribed/{{subreddit.id}}/" style="text-decoration: none; color: rgb(64, 185, 64)">Unjoin</a></p>
-                    {% endif %}
-                {% else %}
+                            {% endif %}
+                            {% else %}
                     <p style="margin:10px;"><a href="/r/{{subreddit.name}}/">/r/{{subreddit}}</a> <a
                         href="/login?next={{ request.path }}" style="text-decoration: none; color: rgb(64, 185, 64)">Join</a></p>
-                {% endif %}
-            {% endfor %}
-        </div>
-        <p></p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    <p></p>
     </div>
 </div>
+</body>
+</html>
 

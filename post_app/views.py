@@ -27,7 +27,6 @@ def upvote_view(request, post_id: int):
   return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('homepage')))
 
 
-
 @login_required
 def downvote_view(request, post_id: int):
   post = Post.objects.get(id=post_id)
@@ -35,15 +34,14 @@ def downvote_view(request, post_id: int):
   post.save()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('homepage')))
 
+
 class SortView(View):
   def get(self, request):
     template_name = 'index.html'
     posts = sorted(Post.objects.all(), key= lambda post: post.votes(), reverse=True)
     context = {'posts': posts}
     return render(request, template_name, context)
-# def sort_view(request):
-#   posts = sorted(Post.objects.all(), key= lambda post: post.votes(), reverse=True)
-#   return render(request, 'index.html', {'posts': posts})
+
 
 class PostDetailView(View):
   def get(self,request, post_id: int):
@@ -53,13 +51,6 @@ class PostDetailView(View):
     form = AddCommentForm
     context = {'post': post, 'comments': comments, 'form': form}
     return render(request, template_name, context)
-# def post_detail(request, post_id: int):
-#   post = Post.objects.get(id=post_id)
-#   comments = Comment.objects.filter(post=post)
-#   form = AddCommentForm()
-#   return render(request, 'post_detail.html', {'post': post, 'comments': comments, 'form': form})
-
-
 
 
 @login_required
@@ -74,17 +65,6 @@ def add_post(request):
     return HttpResponseRedirect(reverse('homepage'))
   form = AddPostForm()
   return render(request, 'add_post.html', {'form': form})
-
-
-# def image_upload_view(request):
-#   if request.method == 'POST':
-#     form = AddPostForm(request.POST, request.FILES)
-#     if form.is_valid():
-#       form.save()
-#       img_obj = form.instance
-#       return render(request, 'main.html.html', {'form': form, 'img_obj': img_obj})
-#   form = AddPostForm()
-#   return render(request, 'main.html', {'form': form})
 
 
 
@@ -134,7 +114,7 @@ def postview(request, id, name):
     return render(request, 'post.html', {'post': post, 'comments': comments, 
     'form': form, "moderators":moderators, "commentator": commentator})
 
-
+# This would be the proper way to replicate reddit's delete
 # def delete_view(request, id):
     # post = Post.objects.get(id=id)
     # form = PostDeleteForm()

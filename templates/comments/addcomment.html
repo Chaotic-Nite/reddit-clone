@@ -1,18 +1,34 @@
-<form method="post" action="/comment/add/{{post.id}}/">
-  {% csrf_token %}
-  <div id="hidden" style="display:none;">
-  </div>
+<html>
+  <head>
+    <title>Reddit</title>
+    <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/reddit-2.svg" type="image/x-icon">
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Reddit</title>
+    <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/reddit-2.svg" type="image/x-icon">
+  </head>
+  <body style='margin-left: 50px;'>
+    {% include 'header_content.html' %}
+    <form method="post" action="/comment/add/{{post.id}}/">
+      {% csrf_token %}
+      <div id="hidden" style="display:none;">
+      </div>
   {{ form}}
   <br />
   <button style="margin-top: 5px; margin-left: 40px;" onclick="zFunction()" id="reply">Add Comment</button>
   <p>
     <!-- <input id="hiddenbutton" style="display:none;" type="submit" value="Add comment"> -->
-</form>
-
-<script>
-
-  function zFunction() {
-    let x = document.getElementById("hidden");
+  </form>
+  
+  <script>
+    
+    function zFunction() {
+      let x = document.getElementById("hidden");
     if (x.style.display === "none") {
       x.style.display = "block";
     } else {
@@ -32,5 +48,7 @@
     }
 
   }
-
+  
 </script>
+ </body>
+</html>
